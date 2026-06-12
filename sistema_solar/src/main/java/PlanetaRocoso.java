@@ -45,7 +45,7 @@ public class PlanetaRocoso extends CuerpoCeleste implements Planeta {
     @Override
     public String toString() {
         return super.toString()
-                + ", distancia al Sol: " + String.format("%.0f", distanciaSol) + " km"
+                + ", distancia al Sol: " + String.format("%.0f", distanciaSol) + " millones de km"
                 + ", lunas: " + numeroLunas
                 + ", tipo: " + getTipo();
     }
