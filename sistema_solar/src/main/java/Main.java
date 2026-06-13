@@ -4,8 +4,6 @@ import java.util.ArrayList;
 public class Main {
 
     public static void main(String[] args) {
-        System.out.println("probando ´prbad");
-
         //Instanciar planetas
         Planeta mercurio = new PlanetaRocoso("Mercurio", 4.879, 57.9, 0);
         Planeta venus = new PlanetaRocoso("Venus", 12.104, 108.2, 0);
