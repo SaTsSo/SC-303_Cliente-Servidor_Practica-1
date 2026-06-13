@@ -1,12 +1,18 @@
 public class PlanetaGaseoso extends CuerpoCeleste implements Planeta {
 
-    private static final double KM_POR_AU = 149_597_870.7;
+    private static final double DISTANCIA_TIERRA = 149.6;
 
     private double distanciaSol;
     private int numeroLunas;
 
     public PlanetaGaseoso(String nombre, double tamano, double distanciaSol, int numeroLunas) {
         super(nombre, tamano);
+        if (distanciaSol <= 0) {
+            throw new IllegalArgumentException("La distancia al Sol debe ser un valor positivo.");
+        }
+        if (numeroLunas < 0) {
+            throw new IllegalArgumentException("El número de lunas no puede ser negativo.");
+        }
         this.distanciaSol = distanciaSol;
         this.numeroLunas = numeroLunas;
     }
@@ -28,26 +34,31 @@ public class PlanetaGaseoso extends CuerpoCeleste implements Planeta {
 
     @Override
     public double calcularAnio() {
-        double distanciaEnAU = distanciaSol / KM_POR_AU;
-        double anioBase = Math.pow(distanciaEnAU, 1.5);
-        double factorMasa = 1.0 + (getTamano() / 70_000.0) * 0.02;
-        return anioBase * factorMasa;
+        double relacionConTierra = distanciaSol / DISTANCIA_TIERRA;
+        double anioBase = relacionConTierra * raizCuadrada(relacionConTierra);
+        return anioBase + anioBase * 0.02;
     }
 
     @Override
     public int compararPorTamano(Planeta otro) {
+        if (otro == null) {
+            throw new IllegalArgumentException("El planeta a comparar no puede ser nulo.");
+        }
         return Double.compare(this.getTamano(), otro.getTamano());
     }
 
     @Override
     public int compararPorDistancia(Planeta otro) {
+        if (otro == null) {
+            throw new IllegalArgumentException("El planeta a comparar no puede ser nulo.");
+        }
         return Double.compare(this.getDistanciaSol(), otro.getDistanciaSol());
     }
 
     @Override
     public String toString() {
         return super.toString()
-                + ", distancia al Sol: " + String.format("%.0f", distanciaSol) + " km"
+                + ", distancia al Sol: " + distanciaSol + " millones de km"
                 + ", lunas: " + numeroLunas
                 + ", tipo: " + getTipo();
     }
